@@ -1,29 +1,60 @@
 import React, {Component} from 'react';
-import Note from './components/Note'
-import NoteForms from './components/NoteForms'
+import firebase from 'firebase';
+import {DB_CONFIG} from './config';
+import 'firebase/database';
+import Note from './components/Note';
+import NoteForms from './components/NoteForms';
 
 class App extends Component {
   constructor() {
     super();
     this.state= {
       notes:[      
-      {noteId:1, noteContent:'note1'},
-      {noteId:2, noteContent:'note2'}
     ]
   }
+
+  this.app=firebase.initializeApp(DB_CONFIG);
+  this.db=this.app.database().ref().child('note');
   this.addNot=this.addNot.bind(this);
+  this.removeNote=this.removeNote.bind(this);
 }
 
-addNot(note) {
-  let {notes}=this.state;
-  notes.push({
-    noteId:notes.length +1,
-    noteContent:note
-  })
-  this.setState({
-    notes:notes
+  componentDidMount(){
+  const {notes}= this.state;
+  this.db.on('child_added', snap => {
+    notes.push({
+      noteId: snap.key,
+      noteContent: snap.val().noteContent
+    })
+    this.setState({notes});
   });
-}
+
+  this.db.on('child_removed', snap =>{
+    for(let i=0; i<notes.length; i++){
+      if(notes[i].noteId = snap.key){
+        notes.splice(i, 1);
+      }
+    }
+ 
+     this.setState({notes});
+   })
+  }
+
+  addNot(note) {
+  // let {notes}=this.state;
+  // notes.push({
+  //   noteId:notes.length +1,
+  //   noteContent:note
+  // })
+  // this.setState({
+  //   notes:notes
+  // });
+  this.db.push().set({noteContent:note})
+  }
+
+  removeNote(noteId){
+    this.db.child(noteId).remove();
+  }
   render(){
 
     return(
@@ -41,6 +72,7 @@ addNot(note) {
             noteid={note.noteId}
             notecontent={note.noteContent}
             key={note.noteId}
+            removeNote={this.removeNote}
             />
           )
         })

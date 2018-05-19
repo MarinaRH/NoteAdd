@@ -7,16 +7,21 @@ class Note extends Component {
     this.noteContent=props.notecontent;
   }
 
-  remove(id){
-      console.log('ooo',this.noteId);
+  handleRemove(id){
+    // console.log('ooo',this.noteId);
+    const response = window.confirm('deseas eliminarlo?');
+    if(response){
+      this.props.removeNote(id);
+    }
+    return
   }
 
   render(){
 
     return(
    <div className="Note">
-       <span onClick={()=>this.remove(this.noteId)}>&times; </span>
-       <p>{this.noteContent}</p>
+      <span onClick={()=>this.handleRemove(this.noteId)}>&times; </span>
+      <p>{this.noteContent}</p>
    </div>
     )
   }

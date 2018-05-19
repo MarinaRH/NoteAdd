@@ -1,7 +1,7 @@
 {
   "name": "ReactNote",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicacion para agregar tus notas de forma permanente",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js",
@@ -37,6 +37,7 @@
     "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
+    "firebase": "^5.0.3",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-append-to-body": "^2.0.20",

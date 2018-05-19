@@ -8,10 +8,10 @@ class NoteForms extends Component {
     }
 
     addNote() {
-//    console.log(this.textInput.value);
+//  console.log(this.textInput.value);
         if(this.textInput.value !=''){
             this.props.addNote(this.textInput.value);
-            this.textInput.value='';
+            this.textInput.value ='';
             this.textInput.focus();
         }else{
             alert('POR FAVOR INGRESE UNA TAREA !!');
