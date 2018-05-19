@@ -64,6 +64,8 @@ class App extends Component {
       </div>
 
       <div className="notesBody">
+      <h2>Agrega y elimina tus notas </h2>
+
       <ul>
         {
           this.state.notes.map(note =>{
